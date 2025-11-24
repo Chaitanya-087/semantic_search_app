@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Search</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .search-box { margin-bottom: 20px; }
+        .card { display: flex; border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; }
+        .card img { max-width: 150px; margin-right: 20px; }
+        .card-details { flex: 1; }
+        .card-details h3 { margin: 0; }
+        .card-details p { margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h1>Live Search</h1>
+    <form method="post" class="search-box">
+        <input type="text" name="query" placeholder="Enter search query" value="{{ query }}" style="width:300px;">
+        <button type="submit">Search</button>
+    </form>
+
+    {% for doc, score in results %}
+        <div class="card">
+            <div class="card-img">
+                {% if doc.images %}
+                    <img src="{{ doc.images[0].thumb }}" alt="thumbnail">
+                {% else %}
+                    <div style="width:150px;height:150px;background:#eee;text-align:center;line-height:150px;">No Image</div>
+                {% endif %}
+            </div>
+            <div class="card-details">
+                <h3>{{ doc.title }}</h3>
+                <p><strong>Category:</strong> {{ doc.main_category or 'N/A' }}</p>
+                {% if doc.price %}<p><strong>Price:</strong> ${{ doc.price }}</p>{% endif %}
+                {% if doc.features %}<p><strong>Features:</strong> {{ doc.features|join(', ') }}</p>{% endif %}
+                {% if doc.description %}<p>{{ doc.description|join(' ') | truncate(200) }}</p>{% endif %}
+                <p><strong>Score:</strong> {{ score }}</p>
+            </div>
+        </div>
+    {% endfor %}
+</body>
+</html>
