@@ -16,7 +16,7 @@ def index():
     if request.method == "POST":
         query = request.form.get("query", "")
         if query.strip():
-            results = engine.search(query, top_k=5)
+            results = engine.search(query, top_k=10, gate=0.55)
 
     return render_template("index.html", query=query, results=results)
 

@@ -1,7 +1,7 @@
 import os, json, sys
 from .ai_client import GeminiClient
 from .faiss_store import FAISSStore
-from .util import build_text, load_chunks
+from util import build_text, load_chunks
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dotenv import load_dotenv
 import numpy as np
@@ -65,12 +65,17 @@ class ProductSearchEngine:
             self.texts = aligned_texts
             self.index = FAISSStore.load(index_path)
 
-    def search(self, query, top_k=5):
+    def search(self, query, gate, top_k=5):
         qemb = self.client.embed(query)
         hits = self.index.search(qemb, top_k)
+        
+        indices = hits["indices"]
+        scores = hits["scores"] 
 
-        docs = [self.texts[i] for i in hits["indices"]]
-        scores = hits["distances"]
-
-        # No reranking yet (placeholder)
-        return list(zip(docs, scores))
+        docs_with_scores = [
+            (self.texts[i], score)
+            for i, score in zip(indices, scores)
+            if score >= gate
+        ]
+        
+        return docs_with_scores
