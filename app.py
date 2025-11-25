@@ -6,7 +6,7 @@ app = Flask(__name__)
 engine = ProductSearchEngine(
     index_path="faiss.index",
     meta_path="metadata.json",
-    chunk_pattern="data/chunk_test.jsonl"
+    chunk_pattern="data/chunk_0.jsonl"
 )
 
 @app.route("/", methods=["GET", "POST"])
