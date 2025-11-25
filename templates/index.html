@@ -59,7 +59,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1260px;
             margin: 0 auto;
             position: relative;
         }
@@ -144,6 +144,7 @@
             border-radius: var(--radius);
             border: 1px solid var(--border);
             display: flex;
+            cursor: pointer;
             flex-direction: column;
             transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
             position: relative;
@@ -153,7 +154,7 @@
         .card:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow);
-            z-index: 50; /* Bring to front on hover */
+            z-index: 50;
         }
 
         .card-img-container {
@@ -175,7 +176,7 @@
         }
 
         .card-content {
-            padding: 20px;
+            padding: 14px;
             display: flex;
             flex-direction: column;
             flex: 1;
@@ -228,62 +229,12 @@
             font-size: 0.9rem;
             color: var(--text-secondary);
             line-height: 1.5;
-            cursor: help;
+            cursor: pointer;
             display: -webkit-box;
-            line-clamp: 2;
-            -webkit-line-clamp: 3; 
+            line-clamp: 1;
+            -webkit-line-clamp: 1; 
             -webkit-box-orient: vertical;
             overflow: hidden;
-        }
-
-        .description-wrapper::after {
-            content: attr(data-full-text);
-            visibility: hidden;
-            opacity: 0;
-            width: 280px;
-            
-            /* Theme-aware colors */
-            background-color: var(--bg-tooltip);
-            color: var(--text-tooltip);
-            
-            text-align: left;
-            border-radius: 6px;
-            padding: 12px;
-            position: absolute;
-            z-index: 999;
-            bottom: 120%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.85rem;
-            line-height: 1.4;
-            white-space: normal;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            transition: opacity 0.2s ease-in-out;
-            pointer-events: none;
-        }
-
-        .description-wrapper::before {
-            content: "";
-            visibility: hidden;
-            opacity: 0;
-            position: absolute;
-            bottom: 105%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            
-            /* Use tooltip bg color for arrow */
-            border-color: var(--bg-tooltip) transparent transparent transparent;
-            
-            z-index: 999;
-            transition: opacity 0.2s ease-in-out;
-        }
-
-        .description-wrapper:hover::after,
-        .description-wrapper:hover::before {
-            visibility: visible;
-            opacity: 1;
         }
 
         .card-footer {
@@ -347,7 +298,7 @@
                         </div>
 
                         {% if doc.description %}
-                            <div class="description-wrapper" data-full-text="{{ doc.description|join(' ') }}">
+                            <div class="description-wrapper" >
                                 <p class="card-description">
                                     {{ doc.description|join(' ') }}
                                 </p>
